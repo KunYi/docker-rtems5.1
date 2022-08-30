@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+HOME_DIR="${HOME}"
+
+[ ! -d "${PWD}/rtems_work" ] && mkdir -p rtems_work
+
+docker run -v ${PWD}/rtems_work:${HOME_DIR}/development:rw \
+  -e USER_ID=`id -u` -e GROUP_ID=`id -g` \
+  -e TERM=xterm-256color -e SHELL=/bin/bash \
+  --rm --init -t -i \
+  --hostname rtems \
+  rtems/ubuntu bash
